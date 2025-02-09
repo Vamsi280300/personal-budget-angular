@@ -1,28 +1,12 @@
 // Budget API
 
 const express = require('express');
-
+const fs = require('fs');
 const app = express();
 const port = 3000;
 
 app.use('/', express.static('public'));
 
-const budget = {
-    myBudget: [
-        {
-            title: 'Eat out',
-            budget: 25
-        },
-        {
-            title: 'Rent',
-            budget: 275
-        },
-        {
-            title: 'Grocery',
-            budget: 110
-        },
-    ]
-};
 
 
 app.get('/hello', (req, res) => {
@@ -30,7 +14,11 @@ app.get('/hello', (req, res) => {
 });
 
 app.get('/budget', (req, res) => {
-    res.json(budget);
+    fs.readFile('Readdata.json', 'utf8', (err, data) => {
+            // Parse the JSON data
+            const budgetData = JSON.parse(data);
+            res.json(budgetData);
+    });
 });
 
 
